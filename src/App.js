@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Container, CssBaseline, Grid } from "@mui/material";
+import axios from "axios";
+import React, { Fragment, useEffect, useState } from "react";
+import Header from "./components/Header";
+import PostCard from "./components/PostCard";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [posts, setPost] = useState([]);
+    const fetchPost = async () => {
+        try {
+            const response = await axios.get(
+                "https://jsonplaceholder.typicode.com/posts"
+            );
+            //console.log(response.data);
+            setPost(response.data);
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+    useEffect(() => {
+        fetchPost();
+    }, []);
+    return (
+        <Fragment>
+            <CssBaseline />
+            <Header />
+            <Container sx={{ my: 4 }}>
+                <Grid container spacing={2}>
+                    {posts.map((post) => {
+                        return (
+                            <Grid key={post.id} item xs={12} md={6} lg={3}>
+                                <PostCard title={post.title} body={post.body} />
+                            </Grid>
+                        );
+                    })}
+                </Grid>
+            </Container>
+        </Fragment>
+    );
 }
 
 export default App;
