@@ -3,14 +3,13 @@ import {
     Button,
     Container,
     CssBaseline,
-    Grid,
     TextField,
     Typography,
 } from "@mui/material";
 import axios from "axios";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import Header from "./components/Header";
-import PostCard from "./components/PostCard";
+
 function App() {
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
